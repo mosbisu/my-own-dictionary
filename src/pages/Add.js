@@ -1,5 +1,7 @@
+import CardEditor from "../components/CardEditor";
+
 const Add = () => {
-  return <div></div>;
+  return <CardEditor />;
 };
 
 export default Add;
