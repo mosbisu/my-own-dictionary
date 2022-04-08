@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const CardEditor = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <h3>단어 추가하기</h3>
@@ -22,9 +25,7 @@ const CardEditor = () => {
           <input type="text" />
         </CardInput>
       </CardWrap>
-      <ButtonAdd>
-        <button>추가하기</button>
-      </ButtonAdd>
+      <ButtonAdd onClick={() => navigate(-1)}>추가하기</ButtonAdd>
     </>
   );
 };
@@ -47,22 +48,21 @@ const CardInput = styled.div`
   font-weight: bold;
   border: 1px solid black;
   line-height: 2;
-  & > input {
+  input {
     border: none;
     outline: none;
   }
 `;
 
-const ButtonAdd = styled.div`
-  & > button {
-    padding: 10px;
-    margin-top: 20px;
-    font-size: 14px;
-    width: 100%;
-    color: white;
-    background-color: #6100ff;
-    border: none;
-  }
+const ButtonAdd = styled.button`
+  padding: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  width: 100%;
+  color: white;
+  background-color: #6100ff;
+  border: none;
+  cursor: pointer;
 `;
 
 export default CardEditor;

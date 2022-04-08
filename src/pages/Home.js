@@ -33,10 +33,7 @@ const Container = styled.div`
   padding: 16px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  h1 {
-    color: slateblue;
-    text-align: center;
-  }
+  position: relative;
 `;
 
 export default Home;
