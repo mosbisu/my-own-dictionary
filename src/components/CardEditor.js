@@ -22,6 +22,9 @@ const CardEditor = () => {
           <input type="text" />
         </CardInput>
       </CardWrap>
+      <ButtonAdd>
+        <button>추가하기</button>
+      </ButtonAdd>
     </>
   );
 };
@@ -29,7 +32,8 @@ const CardEditor = () => {
 const CardWrap = styled.div`
   padding: 10px;
   background-color: white;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 20px;
 `;
 
 const CardTitle = styled.div`
@@ -46,6 +50,18 @@ const CardInput = styled.div`
   & > input {
     border: none;
     outline: none;
+  }
+`;
+
+const ButtonAdd = styled.div`
+  & > button {
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+    width: 100%;
+    color: white;
+    background-color: #6100ff;
+    border: none;
   }
 `;
 
