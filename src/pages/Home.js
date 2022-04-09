@@ -2,8 +2,16 @@ import WordList from "../components/WordList";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import Add from "./Add";
+import { useEffect } from "react";
+import { loadWordFB } from "../redux/modules/word";
+import { useDispatch } from "react-redux";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadWordFB());
+  }, []);
+
   return (
     <AppWrap>
       <Container>
@@ -27,13 +35,14 @@ const AppWrap = styled.div`
 const Container = styled.div`
   background-color: #e2fff8;
   width: 50vw;
-  max-width: 300px;
-  margin: auto;
   height: 80vh;
+  max-width: 400px;
+  margin: auto;
   padding: 16px;
   border: 1px solid #ddd;
   border-radius: 5px;
   position: relative;
+  overflow: auto;
 `;
 
 export default Home;

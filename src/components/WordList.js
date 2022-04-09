@@ -1,15 +1,19 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import WordItem from "./WordItem";
 
 const WordList = () => {
   const navigate = useNavigate();
+  const word_list = useSelector((state) => state.word.list);
 
   return (
     <>
       <h3>MY DICTIONARY</h3>
-      <WordItem />
-      <ButtonAdd onClick={() => navigate("/Add")}>+</ButtonAdd>
+      {word_list.map((list, index) => (
+        <WordItem key={index} list={list} />
+      ))}
+      <ButtonAdd onClick={() => navigate("/add")}>+</ButtonAdd>
     </>
   );
 };

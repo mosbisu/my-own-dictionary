@@ -1,20 +1,21 @@
 import styled from "styled-components";
 
-const WordItem = () => {
+const WordItem = ({ list }) => {
   return (
     <WordWrap>
       <WordTitle>단어</WordTitle>
-      <WordContent>ㅎ1ㅎ1</WordContent>
+      <WordContent>{list.title}</WordContent>
       <WordTitle>설명</WordTitle>
-      <WordContent>히히를 변형한 단어.</WordContent>
+      <WordContent>{list.detail}</WordContent>
       <WordTitle>예시</WordTitle>
-      <WordContent>저 친구가 초콜릿을 줬어. ㅎ1ㅎ1.</WordContent>
+      <WordContent>{list.example}</WordContent>
     </WordWrap>
   );
 };
 
 const WordWrap = styled.div`
   padding: 5px;
+  margin: 10px 0;
   background-color: white;
 `;
 
