@@ -1,7 +1,7 @@
-import CardEditor from "../components/CardEditor";
+import WordEditor from "../components/WordEditor";
 
 const Add = () => {
-  return <CardEditor />;
+  return <WordEditor />;
 };
 
 export default Add;

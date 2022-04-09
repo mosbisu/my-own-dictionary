@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import CardItem from "./CardItem";
+import WordItem from "./WordItem";
 
-const CardList = () => {
+const WordList = () => {
   const navigate = useNavigate();
 
   return (
     <>
       <h3>MY DICTIONARY</h3>
-      <CardItem />
+      <WordItem />
       <ButtonAdd onClick={() => navigate("/Add")}>+</ButtonAdd>
     </>
   );
@@ -28,4 +28,4 @@ const ButtonAdd = styled.button`
   cursor: pointer;
 `;
 
-export default CardList;
+export default WordList;

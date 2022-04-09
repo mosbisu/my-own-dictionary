@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const CardEditor = () => {
+const WordEditor = () => {
   const navigate = useNavigate();
 
   return (
@@ -65,4 +65,4 @@ const ButtonAdd = styled.button`
   cursor: pointer;
 `;
 
-export default CardEditor;
+export default WordEditor;

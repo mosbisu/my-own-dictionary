@@ -1,4 +1,4 @@
-import CardList from "../components/CardList";
+import WordList from "../components/WordList";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import Add from "./Add";
@@ -8,7 +8,7 @@ const Home = () => {
     <AppWrap>
       <Container>
         <Routes>
-          <Route path="/" element={<CardList />} />
+          <Route path="/" element={<WordList />} />
           <Route path="/add" element={<Add />} />
         </Routes>
       </Container>
