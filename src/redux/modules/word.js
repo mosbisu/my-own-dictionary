@@ -46,7 +46,6 @@ export function isLoaded(loaded) {
 // middlewares
 export const loadWordFB = () => {
   return async function (dispatch) {
-    dispatch(isLoaded(false));
     const word_data = await getDocs(collection(db, "words"));
 
     let word_list = [];
@@ -61,6 +60,7 @@ export const loadWordFB = () => {
 
 export const addWordFB = (word) => {
   return async function (dispatch) {
+    dispatch(isLoaded(false));
     const docRef = await addDoc(collection(db, "words"), word);
     const word_data = { id: docRef.id, ...word };
 
@@ -70,6 +70,7 @@ export const addWordFB = (word) => {
 
 export const updateWordFB = (word_id, title, detail, example) => {
   return async function (dispatch, getState) {
+    dispatch(isLoaded(false));
     const docRef = doc(db, "words", word_id);
     await updateDoc(docRef, {
       title,
@@ -87,6 +88,7 @@ export const updateWordFB = (word_id, title, detail, example) => {
 
 export const deleteWordFB = (word_id) => {
   return async function (dispatch, getState) {
+    dispatch(isLoaded(false));
     if (!word_id) {
       alert("아이디가 없네요!");
       return;
@@ -111,7 +113,7 @@ export default function reducer(state = initialState, action = {}) {
 
     case "word/CREATE": {
       const new_word_list = [...state.list, action.word];
-      return { ...state, list: new_word_list };
+      return { ...state, list: new_word_list, is_loaded: true };
     }
 
     case "word/UPDATE": {
@@ -122,14 +124,14 @@ export default function reducer(state = initialState, action = {}) {
           return l;
         }
       });
-      return { ...state, list: new_word_list };
+      return { ...state, list: new_word_list, is_loaded: true };
     }
 
     case "word/DELETE": {
       const new_word_list = state.list.filter((l, idx) => {
         return parseInt(action.word_index) !== idx;
       });
-      return { ...state, list: new_word_list };
+      return { ...state, list: new_word_list, is_loaded: true };
     }
 
     case "word/LOADED": {

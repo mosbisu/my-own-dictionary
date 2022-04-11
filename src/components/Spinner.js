@@ -5,7 +5,7 @@ const Spinner = () => {
 };
 
 const Outter = styled.div`
-  background-color: #ecececec;
+  background-color: white;
   width: 100vw;
   height: 100vh;
   font-size: 50px;
