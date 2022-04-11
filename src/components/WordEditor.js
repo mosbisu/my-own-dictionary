@@ -12,6 +12,19 @@ const WordEditor = () => {
   const example = useRef("");
 
   const addWord = () => {
+    if (title.current.value === "") {
+      alert("단어를 입력하세요!");
+      return;
+    }
+    if (detail.current.value === "") {
+      alert("설명을 입력하세요!");
+      return;
+    }
+    if (example.current.value === "") {
+      alert("예시를 입력하세요!");
+      return;
+    }
+
     dispatch(
       addWordFB({
         title: title.current.value,
@@ -19,6 +32,8 @@ const WordEditor = () => {
         example: example.current.value,
       })
     );
+
+    navigate(-1);
   };
 
   return (
@@ -39,7 +54,6 @@ const WordEditor = () => {
       <ButtonAdd
         onClick={() => {
           addWord();
-          navigate(-1);
         }}
       >
         추가하기
