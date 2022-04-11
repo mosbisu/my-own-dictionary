@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { addWordFB, updateWordFB } from "../redux/modules/word";
+import { addWordFB, deleteWordFB, updateWordFB } from "../redux/modules/word";
 
 const WordEditor = ({ isDetail }) => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const WordEditor = ({ isDetail }) => {
   }, [word_list, isDetail, word_index]);
 
   const addUpdateWord = () => {
-    if (window.confirm("단어를 추가하겠습니까?")) {
+    if (window.confirm(isDetail ? "수정하시겠습니까?" : "추가하겠습니까?")) {
       if (title.current.value === "") {
         alert("단어를 입력하세요!");
         title.current.focus();
@@ -67,6 +67,13 @@ const WordEditor = ({ isDetail }) => {
     }
   };
 
+  const deleteWord = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      dispatch(deleteWordFB(word_list[word_index].id));
+      navigate(-1);
+    }
+  };
+
   return (
     <>
       <h3>단어 추가하기</h3>
@@ -82,13 +89,10 @@ const WordEditor = ({ isDetail }) => {
         <WordTitle>예시</WordTitle>
         <WordInput ref={example} />
       </WordWrap>
-      <ButtonAdd
-        onClick={() => {
-          addUpdateWord();
-        }}
-      >
+      <ButtonAdd onClick={addUpdateWord}>
         {isDetail ? "수정하기" : "추가하기"}
       </ButtonAdd>
+      {isDetail && <ButtonDelete onClick={deleteWord}>삭제하기</ButtonDelete>}
     </>
   );
 };
@@ -121,6 +125,17 @@ const ButtonAdd = styled.button`
   width: 100%;
   color: white;
   background-color: #6100ff;
+  border: none;
+  cursor: pointer;
+`;
+
+const ButtonDelete = styled.button`
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100%;
+  color: white;
+  background-color: red;
   border: none;
   cursor: pointer;
 `;

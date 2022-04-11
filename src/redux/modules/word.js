@@ -3,8 +3,8 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
-  getDoc,
   getDocs,
   updateDoc,
 } from "firebase/firestore";
@@ -14,7 +14,7 @@ import { db } from "../../firebase";
 const LOAD = "word/LOAD";
 const CREATE = "word/CREATE";
 const UPDATE = "word/UPDATE";
-const Delete = "word/DELETE";
+const DELETE = "word/DELETE";
 
 const initialState = {
   list: [],
@@ -31,6 +31,10 @@ export function createWord(word) {
 
 export function updateWord(word_index) {
   return { type: UPDATE, word_index };
+}
+
+export function deleteWord(word_index) {
+  return { type: DELETE, word_index };
 }
 
 // middlewares
@@ -74,6 +78,23 @@ export const updateWordFB = (word_id, title, detail, example) => {
   };
 };
 
+export const deleteWordFB = (word_id) => {
+  return async function (dispatch, getState) {
+    if (!word_id) {
+      alert("아이디가 없네요!");
+      return;
+    }
+    const docRef = doc(db, "words", word_id);
+    await deleteDoc(docRef);
+    const _word_list = getState().word.list;
+    const word_index = _word_list.findIndex((b) => {
+      return b.id === word_id;
+    });
+
+    dispatch(deleteWord(word_index));
+  };
+};
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -96,6 +117,14 @@ export default function reducer(state = initialState, action = {}) {
       });
       return { ...state, list: new_word_list };
     }
+
+    case "word/DELETE": {
+      const new_word_list = state.list.filter((l, idx) => {
+        return parseInt(action.word_index) !== idx;
+      });
+      return { ...state, list: new_word_list };
+    }
+
     default:
       return state;
   }
