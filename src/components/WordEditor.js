@@ -76,19 +76,19 @@ const WordEditor = ({ isDetail }) => {
 
   return (
     <>
-      <h3>단어 추가하기</h3>
-      <WordWrap>
+      <h3>{isDetail ? "단어 수정하기" : "단어 추가하기"}</h3>
+      <WordEditorWrap>
         <WordTitle>단어</WordTitle>
         <WordInput ref={title} />
-      </WordWrap>
-      <WordWrap>
+      </WordEditorWrap>
+      <WordEditorWrap>
         <WordTitle>설명</WordTitle>
         <WordInput ref={detail} />
-      </WordWrap>
-      <WordWrap>
+      </WordEditorWrap>
+      <WordEditorWrap>
         <WordTitle>예시</WordTitle>
         <WordInput ref={example} />
-      </WordWrap>
+      </WordEditorWrap>
       <ButtonAdd onClick={addUpdateWord}>
         {isDetail ? "수정하기" : "추가하기"}
       </ButtonAdd>
@@ -97,7 +97,7 @@ const WordEditor = ({ isDetail }) => {
   );
 };
 
-const WordWrap = styled.div`
+const WordEditorWrap = styled.div`
   padding: 10px;
   background-color: white;
   margin-top: 10px;

@@ -11,21 +11,25 @@ const WordList = () => {
     <>
       <h3>MY DICTIONARY</h3>
       {word_list.map((list, index) => (
-        <div key={index}>
+        <WordListWrap key={index}>
           <WordItem list={list} index={index} />
-          <button
+          <ButtonEdit
             onClick={() => {
               navigate(`/detail/${index}`);
             }}
           >
             수정하기
-          </button>
-        </div>
+          </ButtonEdit>
+        </WordListWrap>
       ))}
       <ButtonAdd onClick={() => navigate("/add")}>+</ButtonAdd>
     </>
   );
 };
+
+const WordListWrap = styled.div`
+  margin-top: 10px;
+`;
 
 const ButtonAdd = styled.button`
   color: white;
@@ -38,6 +42,14 @@ const ButtonAdd = styled.button`
   position: sticky;
   bottom: 0;
   left: 300px;
+  cursor: pointer;
+`;
+
+const ButtonEdit = styled.button`
+  width: 100%;
+  border: none;
+  margin-bottom: 10px;
+  padding: 5px;
   cursor: pointer;
 `;
 

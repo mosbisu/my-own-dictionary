@@ -1,28 +1,20 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const WordItem = ({ list }) => {
-  const navigate = useNavigate();
-
-  const goDetail = () => {
-    navigate(`/detail/${list.index}`);
-  };
-
   return (
-    <WordWrap onClick={goDetail}>
+    <WordItemWrap>
       <WordTitle>단어</WordTitle>
       <WordContent>{list.title}</WordContent>
       <WordTitle>설명</WordTitle>
       <WordContent>{list.detail}</WordContent>
       <WordTitle>예시</WordTitle>
       <WordContent>{list.example}</WordContent>
-    </WordWrap>
+    </WordItemWrap>
   );
 };
 
-const WordWrap = styled.div`
+const WordItemWrap = styled.div`
   padding: 5px;
-  margin: 10px 0;
   background-color: white;
 `;
 
