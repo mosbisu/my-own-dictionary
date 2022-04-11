@@ -4,25 +4,31 @@ import { Route, Routes } from "react-router-dom";
 import Add from "./Add";
 import { useEffect } from "react";
 import { loadWordFB } from "../redux/modules/word";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Detail from "./Detail";
+import Spinner from "../components/Spinner";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const is_loaded = useSelector((state) => state.word.is_loaded);
+
   useEffect(() => {
     dispatch(loadWordFB());
   }, [dispatch]);
 
   return (
-    <AppWrap>
-      <Container>
-        <Routes>
-          <Route path="/" element={<WordList />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/detail/:index" element={<Detail />} />
-        </Routes>
-      </Container>
-    </AppWrap>
+    <>
+      <AppWrap>
+        <Container>
+          <Routes>
+            <Route path="/" element={<WordList />} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/detail/:index" element={<Detail />} />
+          </Routes>
+        </Container>
+      </AppWrap>
+      {!is_loaded && <Spinner />}
+    </>
   );
 };
 

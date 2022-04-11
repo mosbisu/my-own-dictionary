@@ -15,8 +15,10 @@ const LOAD = "word/LOAD";
 const CREATE = "word/CREATE";
 const UPDATE = "word/UPDATE";
 const DELETE = "word/DELETE";
+const LOADED = "word/LOADED";
 
 const initialState = {
+  is_loaded: false,
   list: [],
 };
 
@@ -37,9 +39,14 @@ export function deleteWord(word_index) {
   return { type: DELETE, word_index };
 }
 
+export function isLoaded(loaded) {
+  return { type: LOADED, loaded };
+}
+
 // middlewares
 export const loadWordFB = () => {
   return async function (dispatch) {
+    dispatch(isLoaded(false));
     const word_data = await getDocs(collection(db, "words"));
 
     let word_list = [];
@@ -99,12 +106,12 @@ export const deleteWordFB = (word_id) => {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case "word/LOAD": {
-      return { list: action.word_list };
+      return { list: action.word_list, is_loaded: true };
     }
 
     case "word/CREATE": {
       const new_word_list = [...state.list, action.word];
-      return { list: new_word_list };
+      return { ...state, list: new_word_list };
     }
 
     case "word/UPDATE": {
@@ -123,6 +130,10 @@ export default function reducer(state = initialState, action = {}) {
         return parseInt(action.word_index) !== idx;
       });
       return { ...state, list: new_word_list };
+    }
+
+    case "word/LOADED": {
+      return { ...state, is_loaded: action.loaded };
     }
 
     default:
