@@ -26,9 +26,9 @@ const ButtonAdd = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  position: sticky;
+  bottom: 0;
+  left: 300px;
   cursor: pointer;
 `;
 
