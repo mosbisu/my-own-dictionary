@@ -1,39 +1,70 @@
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { addWordFB } from "../redux/modules/word";
+import { addWordFB, updateWordFB } from "../redux/modules/word";
 
-const WordEditor = () => {
+const WordEditor = ({ isDetail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const word_list = useSelector((state) => state.word.list);
   const title = useRef("");
   const detail = useRef("");
   const example = useRef("");
+  const index = useParams();
+  const word_index = index.index;
 
-  const addWord = () => {
-    if (title.current.value === "") {
-      alert("단어를 입력하세요!");
-      return;
+  useEffect(() => {
+    if (isDetail) {
+      title.current.value = word_list[word_index]
+        ? word_list[word_index].title
+        : "";
+      detail.current.value = word_list[word_index]
+        ? word_list[word_index].detail
+        : "";
+      example.current.value = word_list[word_index]
+        ? word_list[word_index].example
+        : "";
     }
-    if (detail.current.value === "") {
-      alert("설명을 입력하세요!");
-      return;
-    }
-    if (example.current.value === "") {
-      alert("예시를 입력하세요!");
-      return;
-    }
+  }, [word_list, isDetail, word_index]);
 
-    dispatch(
-      addWordFB({
-        title: title.current.value,
-        detail: detail.current.value,
-        example: example.current.value,
-      })
-    );
+  const addUpdateWord = () => {
+    if (window.confirm("단어를 추가하겠습니까?")) {
+      if (title.current.value === "") {
+        alert("단어를 입력하세요!");
+        title.current.focus();
+        return;
+      }
+      if (detail.current.value === "") {
+        alert("설명을 입력하세요!");
+        detail.current.focus();
+        return;
+      }
+      if (example.current.value === "") {
+        alert("예시를 입력하세요!");
+        example.current.focus();
+        return;
+      }
 
-    navigate(-1);
+      isDetail
+        ? dispatch(
+            updateWordFB(
+              word_list[word_index].id,
+              title.current.value,
+              detail.current.value,
+              example.current.value
+            )
+          )
+        : dispatch(
+            addWordFB({
+              title: title.current.value,
+              detail: detail.current.value,
+              example: example.current.value,
+            })
+          );
+
+      navigate(-1);
+    }
   };
 
   return (
@@ -53,10 +84,10 @@ const WordEditor = () => {
       </WordWrap>
       <ButtonAdd
         onClick={() => {
-          addWord();
+          addUpdateWord();
         }}
       >
-        추가하기
+        {isDetail ? "수정하기" : "추가하기"}
       </ButtonAdd>
     </>
   );

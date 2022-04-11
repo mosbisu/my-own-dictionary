@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const WordItem = ({ list }) => {
+  const navigate = useNavigate();
+
+  const goDetail = () => {
+    navigate(`/detail/${list.index}`);
+  };
+
   return (
-    <WordWrap>
+    <WordWrap onClick={goDetail}>
       <WordTitle>단어</WordTitle>
       <WordContent>{list.title}</WordContent>
       <WordTitle>설명</WordTitle>

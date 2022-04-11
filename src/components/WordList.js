@@ -11,7 +11,16 @@ const WordList = () => {
     <>
       <h3>MY DICTIONARY</h3>
       {word_list.map((list, index) => (
-        <WordItem key={index} list={list} />
+        <div key={index}>
+          <WordItem list={list} index={index} />
+          <button
+            onClick={() => {
+              navigate(`/detail/${index}`);
+            }}
+          >
+            수정하기
+          </button>
+        </div>
       ))}
       <ButtonAdd onClick={() => navigate("/add")}>+</ButtonAdd>
     </>

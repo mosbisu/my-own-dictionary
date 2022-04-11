@@ -5,12 +5,13 @@ import Add from "./Add";
 import { useEffect } from "react";
 import { loadWordFB } from "../redux/modules/word";
 import { useDispatch } from "react-redux";
+import Detail from "./Detail";
 
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadWordFB());
-  }, []);
+  }, [dispatch]);
 
   return (
     <AppWrap>
@@ -18,6 +19,7 @@ const Home = () => {
         <Routes>
           <Route path="/" element={<WordList />} />
           <Route path="/add" element={<Add />} />
+          <Route path="/detail/:index" element={<Detail />} />
         </Routes>
       </Container>
     </AppWrap>
