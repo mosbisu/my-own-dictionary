@@ -53,6 +53,7 @@ const WordEditor = ({ isEdit }) => {
               title: title.current.value,
               detail: detail.current.value,
               example: example.current.value,
+              date: Date.now(),
             })
           );
 
