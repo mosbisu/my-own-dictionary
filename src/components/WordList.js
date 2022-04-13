@@ -46,8 +46,6 @@ const ButtonAdd = styled.button`
   &:hover {
     /* transform: scale(1.1); */
     background-color: rgba(97, 0, 255, 1);
-    filter: drop-shadow(0, 0, 5px, #ababab);
-    transition: all 0.3s;
   }
 `;
 
@@ -56,6 +54,8 @@ const ButtonEdit = styled.button`
   border: none;
   margin-bottom: 10px;
   padding: 5px;
+  background-color: burlywood;
+  color: black;
   cursor: pointer;
 `;
 

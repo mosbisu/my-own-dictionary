@@ -117,9 +117,12 @@ const ButtonAdd = styled.button`
   font-size: 14px;
   width: 100%;
   color: white;
-  background-color: #6100ff;
+  background-color: darkblue;
   border: none;
   cursor: pointer;
+  &:hover {
+    background-color: blue;
+  }
 `;
 
 const ButtonDelete = styled.button`
@@ -128,9 +131,12 @@ const ButtonDelete = styled.button`
   font-size: 14px;
   width: 100%;
   color: white;
-  background-color: red;
+  background-color: crimson;
   border: none;
   cursor: pointer;
+  &:hover {
+    background-color: red;
+  }
 `;
 
 export default WordEditor;

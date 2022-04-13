@@ -43,7 +43,7 @@ const AppWrap = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: #e2fff8;
+  background-color: antiquewhite;
   width: 50vw;
   height: 80vh;
   max-width: 400px;
