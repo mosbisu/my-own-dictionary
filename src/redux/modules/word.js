@@ -1,12 +1,10 @@
 // word.js
-
 import {
   addDoc,
   collection,
   deleteDoc,
   doc,
   getDocs,
-  onSnapshot,
   orderBy,
   query,
   updateDoc,
@@ -34,8 +32,8 @@ export function createWord(word) {
   return { type: CREATE, word };
 }
 
-export function updateWord(word_index) {
-  return { type: UPDATE, word_index };
+export function updateWord(word_index, wordData) {
+  return { type: UPDATE, word_index, wordData };
 }
 
 export function deleteWord(word_index) {
@@ -48,29 +46,18 @@ export function isLoaded(loaded) {
 
 // middlewares
 export const loadWordFB = () => {
-  return function (dispatch) {
-    // const word_data = await getDocs(
-    //   collection(db, "words"),
-    //   orderBy("date", "desc")
-    // );
-
-    // let word_list = [];
-
-    // word_data.forEach((doc) => {
-    //   word_list.push({ id: doc.id, ...doc.data() });
-    // });
-
-    onSnapshot(
-      query(collection(db, "words"), orderBy("date", "desc")),
-      (snapshot) => {
-        const word_list = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        dispatch(loadWord(word_list));
-      }
+  return async function (dispatch) {
+    const word_data = await getDocs(
+      query(collection(db, "words"), orderBy("date", "desc"))
     );
+
+    let word_list = [];
+
+    word_data.forEach((doc) => {
+      word_list.push({ id: doc.id, ...doc.data() });
+    });
+
+    dispatch(loadWord(word_list));
   };
 };
 
@@ -88,17 +75,14 @@ export const updateWordFB = (word_id, title, detail, example) => {
   return async function (dispatch, getState) {
     dispatch(isLoaded(false));
     const docRef = doc(db, "words", word_id);
-    await updateDoc(docRef, {
-      title,
-      detail,
-      example,
-    });
+    const _wordData = { title, detail, example };
+    await updateDoc(docRef, _wordData);
     const _word_list = getState().word.list;
     const word_index = _word_list.findIndex((b) => {
       return b.id === word_id;
     });
 
-    dispatch(updateWord(word_index));
+    dispatch(updateWord(word_index, _wordData));
   };
 };
 
@@ -124,14 +108,18 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case "word/CREATE": {
-      const new_word_list = [...state.list];
+      const new_word_list = [action.word, ...state.list];
+      console.log(new_word_list);
       return { ...state, list: new_word_list, is_loaded: true };
     }
 
     case "word/UPDATE": {
       const new_word_list = state.list.map((l, idx) => {
         if (parseInt(action.word_index) === idx) {
-          return { ...l };
+          return {
+            ...l,
+            ...action.wordData,
+          };
         } else {
           return l;
         }
