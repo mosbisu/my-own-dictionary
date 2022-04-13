@@ -4,32 +4,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { addWordFB, deleteWordFB, updateWordFB } from "../redux/modules/word";
 
-const WordEditor = ({ isDetail }) => {
+const WordEditor = ({ isEdit }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const word_list = useSelector((state) => state.word.list);
   const title = useRef("");
   const detail = useRef("");
   const example = useRef("");
-  const index = useParams();
-  const word_index = index.index;
+  const { index } = useParams();
 
   useEffect(() => {
-    if (isDetail) {
-      title.current.value = word_list[word_index]
-        ? word_list[word_index].title
-        : "";
-      detail.current.value = word_list[word_index]
-        ? word_list[word_index].detail
-        : "";
-      example.current.value = word_list[word_index]
-        ? word_list[word_index].example
-        : "";
+    if (isEdit) {
+      title.current.value = word_list[index] ? word_list[index].title : "";
+      detail.current.value = word_list[index] ? word_list[index].detail : "";
+      example.current.value = word_list[index] ? word_list[index].example : "";
     }
-  }, [word_list, isDetail, word_index]);
+  }, [word_list, isEdit, index]);
 
   const addUpdateWord = () => {
-    if (window.confirm(isDetail ? "수정하시겠습니까?" : "추가하겠습니까?")) {
+    if (window.confirm(isEdit ? "수정하시겠습니까?" : "추가하겠습니까?")) {
       if (title.current.value === "") {
         alert("단어를 입력하세요!");
         title.current.focus();
@@ -46,10 +39,10 @@ const WordEditor = ({ isDetail }) => {
         return;
       }
 
-      isDetail
+      isEdit
         ? dispatch(
             updateWordFB(
-              word_list[word_index].id,
+              word_list[index].id,
               title.current.value,
               detail.current.value,
               example.current.value
@@ -69,14 +62,14 @@ const WordEditor = ({ isDetail }) => {
 
   const deleteWord = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      dispatch(deleteWordFB(word_list[word_index].id));
+      dispatch(deleteWordFB(word_list[index].id));
       navigate(-1);
     }
   };
 
   return (
     <>
-      <h3>{isDetail ? "단어 수정하기" : "단어 추가하기"}</h3>
+      <h3>{isEdit ? "단어 수정하기" : "단어 추가하기"}</h3>
       <WordEditorWrap>
         <WordTitle>단어</WordTitle>
         <WordInput ref={title} />
@@ -90,9 +83,9 @@ const WordEditor = ({ isDetail }) => {
         <WordInput ref={example} />
       </WordEditorWrap>
       <ButtonAdd onClick={addUpdateWord}>
-        {isDetail ? "수정하기" : "추가하기"}
+        {isEdit ? "수정하기" : "추가하기"}
       </ButtonAdd>
-      {isDetail && <ButtonDelete onClick={deleteWord}>삭제하기</ButtonDelete>}
+      {isEdit && <ButtonDelete onClick={deleteWord}>삭제하기</ButtonDelete>}
     </>
   );
 };

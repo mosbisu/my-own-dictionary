@@ -15,7 +15,7 @@ const WordList = () => {
           <WordItem list={list} index={index} />
           <ButtonEdit
             onClick={() => {
-              navigate(`/detail/${index}`);
+              navigate(`/edit/${index}`);
             }}
           >
             수정하기
@@ -34,15 +34,21 @@ const WordListWrap = styled.div`
 const ButtonAdd = styled.button`
   color: white;
   font-size: 50px;
-  background-color: #6100ff;
+  background-color: rgba(97, 0, 255, 0.9);
   border: none;
   width: 60px;
   height: 60px;
   border-radius: 30px;
   position: sticky;
-  bottom: 0;
   left: 300px;
+  bottom: 0;
   cursor: pointer;
+  &:hover {
+    /* transform: scale(1.1); */
+    background-color: rgba(97, 0, 255, 1);
+    filter: drop-shadow(0, 0, 5px, #ababab);
+    transition: all 0.3s;
+  }
 `;
 
 const ButtonEdit = styled.button`
