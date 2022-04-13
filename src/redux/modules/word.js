@@ -89,10 +89,6 @@ export const updateWordFB = (word_id, title, detail, example) => {
 export const deleteWordFB = (word_id) => {
   return async function (dispatch, getState) {
     dispatch(isLoaded(false));
-    if (!word_id) {
-      alert("아이디가 없네요!");
-      return;
-    }
     const docRef = doc(db, "words", word_id);
     await deleteDoc(docRef);
     const _word_list = getState().word.list;
