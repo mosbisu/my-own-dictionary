@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Header from "./Header";
 import WordItem from "./WordItem";
 
 const WordList = () => {
@@ -9,17 +10,10 @@ const WordList = () => {
 
   return (
     <>
-      <h3>MY DICTIONARY</h3>
+      <Header title={"MY DICTIONARY"} />
       {word_list.map((list, index) => (
         <WordListWrap key={index}>
           <WordItem list={list} index={index} />
-          <ButtonEdit
-            onClick={() => {
-              navigate(`/edit/${index}`);
-            }}
-          >
-            수정하기
-          </ButtonEdit>
         </WordListWrap>
       ))}
       <ButtonAdd onClick={() => navigate("/add")}>+</ButtonAdd>
@@ -47,16 +41,6 @@ const ButtonAdd = styled.button`
     /* transform: scale(1.1); */
     background-color: rgba(97, 0, 255, 1);
   }
-`;
-
-const ButtonEdit = styled.button`
-  width: 100%;
-  border: none;
-  margin-bottom: 10px;
-  padding: 5px;
-  background-color: burlywood;
-  color: black;
-  cursor: pointer;
 `;
 
 export default WordList;

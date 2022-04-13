@@ -2,7 +2,8 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { addWordFB, deleteWordFB, updateWordFB } from "../redux/modules/word";
+import { addWordFB, updateWordFB } from "../redux/modules/word";
+import Header from "./Header";
 
 const WordEditor = ({ isEdit }) => {
   const navigate = useNavigate();
@@ -61,16 +62,9 @@ const WordEditor = ({ isEdit }) => {
     }
   };
 
-  const deleteWord = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      dispatch(deleteWordFB(word_list[index].id));
-      navigate(-1);
-    }
-  };
-
   return (
     <>
-      <h3>{isEdit ? "단어 수정하기" : "단어 추가하기"}</h3>
+      <Header title={isEdit ? "단어 수정하기" : "단어 추가하기"} />
       <WordEditorWrap>
         <WordTitle>단어</WordTitle>
         <WordInput ref={title} />
@@ -86,7 +80,6 @@ const WordEditor = ({ isEdit }) => {
       <ButtonAdd onClick={addUpdateWord}>
         {isEdit ? "수정하기" : "추가하기"}
       </ButtonAdd>
-      {isEdit && <ButtonDelete onClick={deleteWord}>삭제하기</ButtonDelete>}
     </>
   );
 };
@@ -96,6 +89,7 @@ const WordEditorWrap = styled.div`
   background-color: white;
   margin-top: 10px;
   margin-bottom: 20px;
+  border-radius: 10px;
 `;
 
 const WordTitle = styled.div`
@@ -104,39 +98,28 @@ const WordTitle = styled.div`
 `;
 
 const WordInput = styled.input`
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin: 5px 0;
   border: 1px solid black;
+  border-radius: 5px;
   line-height: 2.5;
   outline: none;
   width: 100%;
+  padding-left: 5px;
 `;
 
 const ButtonAdd = styled.button`
   padding: 10px;
-  margin-top: 20px;
-  font-size: 14px;
-  width: 100%;
-  color: white;
-  background-color: darkblue;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    background-color: blue;
-  }
-`;
-
-const ButtonDelete = styled.button`
-  padding: 10px;
   margin-top: 10px;
   font-size: 14px;
+  font-weight: bold;
   width: 100%;
   color: white;
-  background-color: crimson;
+  border-radius: 20px;
+  background-color: blue;
   border: none;
   cursor: pointer;
   &:hover {
-    background-color: red;
+    background-color: darkblue;
   }
 `;
 
