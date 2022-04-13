@@ -6,6 +6,9 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  onSnapshot,
+  orderBy,
+  query,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -45,16 +48,29 @@ export function isLoaded(loaded) {
 
 // middlewares
 export const loadWordFB = () => {
-  return async function (dispatch) {
-    const word_data = await getDocs(collection(db, "words"));
+  return function (dispatch) {
+    // const word_data = await getDocs(
+    //   collection(db, "words"),
+    //   orderBy("date", "desc")
+    // );
 
-    let word_list = [];
+    // let word_list = [];
 
-    word_data.forEach((doc) => {
-      word_list.push({ id: doc.id, ...doc.data() });
-    });
+    // word_data.forEach((doc) => {
+    //   word_list.push({ id: doc.id, ...doc.data() });
+    // });
 
-    dispatch(loadWord(word_list));
+    onSnapshot(
+      query(collection(db, "words"), orderBy("date", "desc")),
+      (snapshot) => {
+        const word_list = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        dispatch(loadWord(word_list));
+      }
+    );
   };
 };
 
@@ -108,7 +124,7 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case "word/CREATE": {
-      const new_word_list = [...state.list, action.word];
+      const new_word_list = [...state.list];
       return { ...state, list: new_word_list, is_loaded: true };
     }
 
