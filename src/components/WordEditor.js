@@ -1,3 +1,4 @@
+import { serverTimestamp } from "firebase/firestore";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -54,7 +55,7 @@ const WordEditor = ({ isEdit }) => {
               title: title.current.value,
               detail: detail.current.value,
               example: example.current.value,
-              date: Date.now(),
+              date: serverTimestamp(),
             })
           );
 
