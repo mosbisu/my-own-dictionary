@@ -52,7 +52,12 @@ const Container = styled.div`
   border: 1px solid #ddd;
   border-radius: 5px;
   position: relative;
-  overflow: auto;
+  overflow-y: scroll;
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
 `;
 
 export default App;
