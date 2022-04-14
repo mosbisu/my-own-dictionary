@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +9,23 @@ const WordList = () => {
   const navigate = useNavigate();
   const word_list = useSelector((state) => state.word.list);
 
+  useEffect(() => {
+    if (word_list.length < 4) {
+      document.getElementById("add").style.cssText = `
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      `;
+    } else {
+      document.getElementById("add").style.cssText = `
+        position: sticky;
+        bottom: 0;
+        right: 0;
+        left: 100%
+      `;
+    }
+  }, [word_list]);
+
   return (
     <>
       <Header title={"MY DICTIONARY"} />
@@ -16,7 +34,9 @@ const WordList = () => {
           <WordItem list={list} index={index} />
         </WordListWrap>
       ))}
-      <ButtonAdd onClick={() => navigate("/add")}>+</ButtonAdd>
+      <ButtonAdd id="add" onClick={() => navigate("/add")}>
+        +
+      </ButtonAdd>
     </>
   );
 };
@@ -33,9 +53,6 @@ const ButtonAdd = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  position: sticky;
-  left: 300px;
-  bottom: 0;
   cursor: pointer;
   &:hover {
     /* transform: scale(1.1); */

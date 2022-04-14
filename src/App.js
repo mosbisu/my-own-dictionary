@@ -58,6 +58,11 @@ const Container = styled.div`
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+  }
 `;
 
 export default App;
